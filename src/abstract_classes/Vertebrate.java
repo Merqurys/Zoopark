@@ -1,3 +1,4 @@
+// Vertebrate.java
 package abstract_classes;
 
 import interfaces.Animal;
@@ -7,12 +8,14 @@ public abstract class Vertebrate implements Animal {
     private int age;
     private double weight;
     private boolean isHungry;
+    private boolean isHealthy;
 
     public Vertebrate(String name, int age, double weight) {
         setName(name);
         setAge(age);
         setWeight(weight);
         this.isHungry = true;
+        this.isHealthy = true;
     }
 
     public String getName() {
@@ -56,13 +59,16 @@ public abstract class Vertebrate implements Animal {
         isHungry = hungry;
     }
 
-    // Общие методы для всех позвоночных
-    public void sleep() {
-        System.out.println(name + " спит");
+    public boolean isHealthy() {
+        return isHealthy;
     }
 
-    public void move() {
-        System.out.println(name + " двигается");
+    public void setHealthy(boolean healthy) {
+        isHealthy = healthy;
+    }
+
+    public void sleep() {
+        System.out.println(name + " спит");
     }
 
     @Override
@@ -74,4 +80,10 @@ public abstract class Vertebrate implements Animal {
             System.out.println(name + " уже сыт");
         }
     }
+
+    @Override
+    public abstract void move();
+
+    @Override
+    public abstract void makeSound();
 }

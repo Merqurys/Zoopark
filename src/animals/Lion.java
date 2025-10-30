@@ -1,13 +1,16 @@
+// Lion.java
 package animals;
 
 import abstract_classes.Vertebrate;
 
 public class Lion extends Vertebrate {
     private String maneColor;
+    private boolean isAlpha;
 
     public Lion(String name, int age, double weight, String maneColor) {
         super(name, age, weight);
         setManeColor(maneColor);
+        this.isAlpha = false;
     }
 
     public String getManeColor() {
@@ -21,13 +24,37 @@ public class Lion extends Vertebrate {
         this.maneColor = maneColor;
     }
 
+    public boolean isAlpha() {
+        return isAlpha;
+    }
+
+    public void setAlpha(boolean alpha) {
+        isAlpha = alpha;
+        if (alpha) {
+            System.out.println(getName() + " теперь вожак прайда!");
+        }
+    }
+
     @Override
     public void makeSound() {
-        System.out.println(getName() + " рычит: РРРРРР!");
+        if (isAlpha) {
+            System.out.println(getName() + " громко рычит: РРРРРР! (Вожак прайда)");
+        } else {
+            System.out.println(getName() + " рычит: Ррррр!");
+        }
     }
 
     @Override
     public void move() {
-        System.out.println(getName() + " гордо шагает по вольеру");
+        if (isAlpha) {
+            System.out.println(getName() + " гордо шествует по территории");
+        } else {
+            System.out.println(getName() + " грациозно перемещается");
+        }
+    }
+
+    public void hunt() {
+        System.out.println(getName() + " отправляется на охоту");
+        setHungry(true);
     }
 }

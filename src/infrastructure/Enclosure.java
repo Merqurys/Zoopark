@@ -1,3 +1,4 @@
+// Enclosure.java
 package infrastructure;
 
 import interfaces.Animal;
@@ -5,16 +6,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Enclosure {
-    // Инкапсуляция: приватное поле
     private List<Animal> animals;
     private String name;
+    private double area;
+    private boolean needsCleaning;
 
-    public Enclosure(String name) {
+    public Enclosure(String name, double area) {
         this.name = name;
+        setArea(area);
         this.animals = new ArrayList<>();
+        this.needsCleaning = true;
     }
 
-    // Контролируемый доступ к списку животных
+    public String getName() {
+        return name;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        if (area <= 0) {
+            throw new IllegalArgumentException("Площадь должна быть положительной");
+        }
+        this.area = area;
+    }
+
+    public boolean needsCleaning() {
+        return needsCleaning;
+    }
+
+    public void setNeedsCleaning(boolean needsCleaning) {
+        this.needsCleaning = needsCleaning;
+    }
+
     public void addAnimal(Animal animal) {
         if (animal == null) {
             throw new IllegalArgumentException("Животное не может быть null");
@@ -32,22 +58,30 @@ public class Enclosure {
     }
 
     public List<Animal> getAnimals() {
-        // Возвращаем копию для защиты от внешних изменений
         return new ArrayList<>(animals);
     }
 
-    public String getName() {
-        return name;
+    public int getAnimalCount() {
+        return animals.size();
     }
 
     public void displayAnimals() {
-        System.out.println("\n=== Вольер " + name + " ===");
+        System.out.println("\n=== Вольер " + name + " (" + area + " м²) ===");
         if (animals.isEmpty()) {
             System.out.println("Вольер пуст");
         } else {
+            System.out.println("Количество животных: " + getAnimalCount());
             for (Animal animal : animals) {
-                System.out.println("- " + animal.getName());
+                String healthStatus = animal.isHealthy() ? "здоров" : "требует внимания";
+                System.out.println("- " + animal.getName() + " (" + healthStatus + ")");
             }
         }
+        System.out.println("Статус уборки: " + (needsCleaning ? "требуется уборка" : "чистый"));
+    }
+
+    public void performMaintenance() {
+        System.out.println("Проведение технического обслуживания вольера " + name);
+        needsCleaning = false;
+        System.out.println("Вольер " + name + " готов к приему посетителей!");
     }
 }
